@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "bulma": "^0.7.4",
+    "firebase": "^5.8.3",
+    "mobx": "^5.9.0",
+    "mobx-react": "^5.4.3",
     "node-sass": "^4.11.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
@@ -23,5 +26,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.5"
+  }
 }

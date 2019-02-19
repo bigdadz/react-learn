@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Bulma from 'bulma'
+import 'bulma'
 import Navbar from './Navbar'
 import Login from './Login'
 
