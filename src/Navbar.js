@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import 'bulma'
+import { observer } from 'mobx-react'
 
+@observer
 class Navbar extends Component {
+  loginButton() {
+    return (
+      <div className="buttons">
+        <a className="button is-primary"><strong>Sign up</strong></a>
+        <a className="button is-light">Log in</a>
+      </div>
+    )
+  }
+
+  logoutButton() {
+    return (
+      <div className="buttons">
+        <a className="button is-primary" onClick={() => this.props.firebase.auth().signOut() }><strong>Logout</strong></a>
+      </div>
+    )
+  }
+
   render() {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -37,10 +56,7 @@ class Navbar extends Component {
 
           <div className="navbar-end">
             <div className="navbar-item">
-              <div className="buttons">
-                <a className="button is-primary"><strong>Sign up</strong></a>
-                <a className="button is-light">Log in</a>
-              </div>
+              { (this.props.authStore.currentUser == null) ? this.loginButton() : this.logoutButton() }
             </div>
           </div>
         </div>

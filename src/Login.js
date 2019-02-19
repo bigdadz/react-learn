@@ -1,36 +1,19 @@
 import React, { Component } from 'react';
 import 'bulma'
-import firebase from 'firebase/app';
-import { observer } from 'mobx-react';
-import { observable } from 'mobx';
+// import { observer } from 'mobx-react';
 
-
-var appState = observable({
-  email: '',
-  password: ''
-});
-
-@observer
+// @observer
 class Login extends Component {
   constructor () {
     super()
-    var config = {
-      apiKey: "AIzaSyC3VUQ1IEZ-7zczU-m4YXRMJrBNK6XpAzU",
-      authDomain: "bigdad-react-learn.firebaseapp.com",
-      databaseURL: "https://bigdad-react-learn.firebaseio.com",
-      projectId: "bigdad-react-learn",
-      storageBucket: "bigdad-react-learn.appspot.com",
-      messagingSenderId: "854364423895"
-    };
-    firebase.initializeApp(config);
   }
+
   handlerLogin () {
-    // firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-    //   console.log("Login Success");
-    //   console.log(error);
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    // });
+    this.props.firebase.auth().signInWithEmailAndPassword(this.props.authStore.email, this.props.authStore.password).catch(function (error) {
+      console.log(error);
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
   }
 
   render() {
@@ -46,7 +29,12 @@ class Login extends Component {
             <div className="card-content">
               <div className="field">
                 <p className="control has-icons-left has-icons-right">
-                  <input className="input" type="email" placeholder="Email" />
+                  <input 
+                    className="input" 
+                    type="email" 
+                    placeholder="Email" 
+                    onChange={(e) => this.props.authStore.setEmail(e.target.value)} 
+                    />
                   <span className="icon is-small is-left">
                     <i className="fas fa-envelope"></i>
                   </span>
@@ -57,14 +45,19 @@ class Login extends Component {
               </div>
               <div className="field">
                 <p className="control has-icons-left">
-                  <input className="input" type="password" placeholder="Password" />
+                  <input
+                    className="input"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => this.props.authStore.setPassword(e.target.value)}
+                  />
                   <span className="icon is-small is-left">
                     <i className="fas fa-lock"></i>
                   </span>
                 </p>
               </div>
               <div className="has-text-right">
-                <button className="button is-primary" onClick={this.handlerLogin}>Login</button>
+                <button className="button is-primary" onClick={this.handlerLogin.bind(this)}>Login</button>
               </div>
             </div>
           </div>
