@@ -3,11 +3,14 @@ import SignIn from '../components/SignIn';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
+// import 'firebase/database';
+import 'firebase/firestore';
 
 class AuthStore {
   @observable email = '';
   @observable password = '';
   @observable currentUser = null;
+  @observable userInfo = null;
 
   @action initializeStore() {
     var config = {
@@ -43,7 +46,9 @@ class AuthStore {
   }
 
   @action async signUp() {
-    return firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function (error) {
+    return firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+    .then((res) => this.writeUserData(res.user) )
+    .catch(function (error) {
       console.log(error);
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -52,6 +57,18 @@ class AuthStore {
 
   @action signOut() {
     return firebase.auth().signOut()
+  }
+
+  writeUserData(user) {
+    var db = firebase.firestore()
+    db.collection("users").doc(user.uid).set({
+      email: user.email,
+    }).then(function (docRef) {
+      console.log("Document written with ID: ", docRef);
+    })
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    });
   }
 }
 

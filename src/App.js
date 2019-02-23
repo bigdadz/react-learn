@@ -6,8 +6,9 @@ import Navbar from './components/Navbar'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import Welcome from './components/Welcome'
+import PrivateRoute from './utils/PrivateRoute'
 
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 
 @inject('authStore')
 @withRouter
@@ -32,9 +33,11 @@ class App extends Component {
     return (
       <div className="container">
         <Navbar /> <br />
-        <Route exact path='/' component={Welcome} />
-        <Route path='/signin' component={SignIn} />
-        <Route path='/signup' component={SignUp} />
+        <Switch>
+          <PrivateRoute path='/welcome' component={Welcome} />
+          <Route exact path='/signin' component={SignIn} />
+          <Route path='/signup' component={SignUp} />
+        </Switch>
       </div>
     );
   }
