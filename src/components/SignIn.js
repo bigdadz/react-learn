@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'bulma'
+import { inject } from 'mobx-react';
 
+@inject('authStore')
 class SignIn extends Component {
   constructor () {
     super()

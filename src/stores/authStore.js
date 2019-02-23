@@ -34,7 +34,7 @@ class AuthStore {
     this.currentUser = currentUser;
   }
 
-  @action signIn() {
+  @action async signIn() {
     return firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch(function (error) {
       console.log(error);
       var errorCode = error.code;
@@ -42,7 +42,7 @@ class AuthStore {
     })
   }
 
-  @action signUp() {
+  @action async signUp() {
     return firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function (error) {
       console.log(error);
       var errorCode = error.code;

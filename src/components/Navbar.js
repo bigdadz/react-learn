@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react';
 import 'bulma'
 import { Link } from "react-router-dom";
-
+@inject('authStore')
 @observer
 class Navbar extends Component {
   loginButton() {
