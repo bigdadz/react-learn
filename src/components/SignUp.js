@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import 'bulma'
-// import { observer } from 'mobx-react';
 
-// @observer
 class Login extends Component {
   constructor () {
     super()
   }
 
-  handlerLogin () {
-    this.props.firebase.auth().signInWithEmailAndPassword(this.props.authStore.email, this.props.authStore.password).catch(function (error) {
-      console.log(error);
-      var errorCode = error.code;
-      var errorMessage = error.message;
-    });
+  handlerSignUp () {
+    this.props.authStore.signUp()
   }
 
   render() {
@@ -23,7 +17,7 @@ class Login extends Component {
           <div className="card">
             <header className="card-header">
               <p className="card-header-title">
-                Login
+                Sign up
               </p> 
             </header>
             <div className="card-content">
@@ -57,7 +51,7 @@ class Login extends Component {
                 </p>
               </div>
               <div className="has-text-right">
-                <button className="button is-primary" onClick={this.handlerLogin.bind(this)}>Login</button>
+                <button className="button is-primary" onClick={this.handlerSignUp.bind(this)}>Sign up</button>
               </div>
             </div>
           </div>

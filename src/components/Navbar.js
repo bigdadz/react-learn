@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import 'bulma'
 import { observer } from 'mobx-react'
+import 'bulma'
+import { Link } from "react-router-dom";
 
 @observer
 class Navbar extends Component {
   loginButton() {
     return (
       <div className="buttons">
-        <a className="button is-primary"><strong>Sign up</strong></a>
-        <a className="button is-light">Log in</a>
+        <Link to="/signup" className="button is-primary">Sign up</Link>
+        <Link to="/signin" className="button is-light">Sign in</Link>
       </div>
     )
   }
@@ -16,7 +17,7 @@ class Navbar extends Component {
   logoutButton() {
     return (
       <div className="buttons">
-        <a className="button is-primary" onClick={() => this.props.firebase.auth().signOut() }><strong>Logout</strong></a>
+        <a className="button is-primary" onClick={() => this.props.authStore.signOut() }><strong>Sign out</strong></a>
       </div>
     )
   }
@@ -25,10 +26,10 @@ class Navbar extends Component {
     return (
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a className="navbar-item" href="https://bigdad-react-learn.firebaseapp.com/">
+          <Link to="/" className="navbar-item">
             <img src="fusion.png" alt="logo" width="28" height="28" />
             <strong>&nbsp;React + Firebase</strong>
-          </a>
+          </Link>
 
           <a href="#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -39,19 +40,6 @@ class Navbar extends Component {
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
-            {/* <a className="navbar-item">Home</a>
-            <a className="navbar-item">Documentation</a>
-
-            <div className="navbar-item has-dropdown is-hoverable">
-              <a className="navbar-link">More</a>
-              <div className="navbar-dropdown">
-                <a className="navbar-item">About</a>
-                <a className="navbar-item">Jobs</a>
-                <a className="navbar-item">Contact</a>
-                <hr className="navbar-divider" />
-                <a className="navbar-item">Report an issue</a>
-              </div>
-            </div> */}
           </div>
 
           <div className="navbar-end">
