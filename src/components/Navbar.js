@@ -1,56 +1,79 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import 'bulma'
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 @inject('authStore')
 @observer
 class Navbar extends Component {
   loginButton() {
+    const { classes } = this.props;
     return (
-      <div className="buttons">
-        <Link to="/signup" className="button is-primary">Sign up</Link>
-        <Link to="/signin" className="button is-light">Sign in</Link>
+      <div>
+        <Button color="inherit">
+          <Link to="/signup" className={classes.button} >Sign up</Link>
+        </Button>
+        <Button color="inherit">
+          <Link to="/signin" className={classes.button} >Sign in</Link>
+        </Button>
       </div>
     )
   }
 
   logoutButton() {
     return (
-      <div className="buttons">
-        <a className="button is-primary" onClick={() => this.props.authStore.signOut() }><strong>Sign out</strong></a>
-      </div>
+      <Button color="inherit" onClick={() => this.props.authStore.signOut()}>
+        Sign out
+      </Button>
     )
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-        <div className="navbar-brand">
-          <Link to="/" className="navbar-item">
-            <img src="fusion.png" alt="logo" width="28" height="28" />
-            <strong>&nbsp;React + Firebase</strong>
-          </Link>
-
-          <a href="#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div id="navbarBasicExample" className="navbar-menu">
-          <div className="navbar-start">
-          </div>
-
-          <div className="navbar-end">
-            <div className="navbar-item">
-              { (this.props.authStore.currentUser == null) ? this.loginButton() : this.logoutButton() }
-            </div>
-          </div>
-        </div>
-      </nav>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              React + Firebase
+          </Typography>
+            {(this.props.authStore.currentUser == null) ? this.loginButton() : this.logoutButton()}
+          </Toolbar>
+        </AppBar>
+      </div>
     );
   }
 }
 
-export default Navbar;
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  button: {
+    color: "white",
+    textDecoration: "none"
+  }
+};
+
+Navbar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Navbar);

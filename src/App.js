@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import 'bulma'
 import { inject, observer } from 'mobx-react';
 import Navbar from './components/Navbar'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import Welcome from './components/Welcome'
+import Home from './components/Home'
 import PrivateRoute from './utils/PrivateRoute'
 
 import { Route, withRouter, Switch } from "react-router-dom";
@@ -35,7 +35,8 @@ class App extends Component {
         <Navbar /> <br />
         <Switch>
           <PrivateRoute path='/welcome' component={Welcome} />
-          <Route exact path='/signin' component={SignIn} />
+          <Route exact path='/' component={Home} />
+          <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
         </Switch>
       </div>
