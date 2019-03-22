@@ -35,7 +35,8 @@ class App extends Component {
         <Navbar /> <br />
         <Switch>
           <PrivateRoute path='/welcome' component={Welcome} />
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={this.props.authStore.currentUser ? Welcome : Home } />
+
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
         </Switch>

@@ -11,6 +11,7 @@ class AuthStore {
   @observable password = '';
   @observable currentUser = null;
   @observable userInfo = null;
+  @observable filePaths = [];
 
   @action initializeStore() {
     var config = {
@@ -57,6 +58,16 @@ class AuthStore {
 
   @action signOut() {
     return firebase.auth().signOut()
+  }
+
+  @action savePathFile(path) {
+    var db = firebase.firestore()
+    db.collection("users").doc(this.currentUser.uid).update({
+      filePaths: firebase.firestore.FieldValue.arrayUnion(path)
+    }).then((docRef) => this.filePaths.push(path))
+    .catch(function (error) {
+      console.error("Error adding document: ", error);
+    });
   }
 
   writeUserData(user) {
